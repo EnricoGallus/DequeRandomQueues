@@ -1,12 +1,18 @@
+import edu.princeton.cs.algs4.StdRandom;
+
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
+
+    private int counter = 0;
+    private Item[] q;
 
     /**
      * construct an empty randomized queue
      */
     public RandomizedQueue() {
-
+        q = (Item[]) new Object[0];
     }
 
     /**
@@ -14,7 +20,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @return
      */
     public boolean isEmpty() {
-        return false;
+        return counter == 0;
     }
 
     /**
@@ -22,7 +28,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @return
      */
     public int size() {
-        return 0;
+        return counter;
     }
 
     /**
@@ -30,6 +36,13 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @param item
      */
     public void enqueue(Item item) {
+        validateEnqueue(item);
+
+        if (counter == q.length) {
+            resize(q.length == 0 ? 1 : 2 * q.length);
+        }
+
+        q[counter++] = item;
     }
 
     /**
@@ -37,7 +50,17 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @return
      */
     public Item dequeue() {
-        return null;
+        validateEmpty();
+
+        int random = StdRandom.uniform(counter);
+
+        Item item = q[random];
+        q[random] = q[--counter];
+        if (counter > 0 && counter == q.length/4) {
+            resize(q.length/2);
+        }
+
+        return item;
     }
 
     /**
@@ -45,7 +68,15 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @return
      */
     public Item sample() {
-        return null;
+        validateEmpty();
+
+        Item item = null;
+        while (item == null) {
+            int random = StdRandom.uniform(counter);
+            item = q[random];
+        }
+
+        return item;
     }
 
     /**
@@ -53,7 +84,57 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @return
      */
     public Iterator<Item> iterator() {
-        return null;
+        return new RandomizedIterator<Item>(q);
+    }
+
+    private class RandomizedIterator<Item> implements Iterator<Item> {
+        private RandomizedQueue<Item> queue = new RandomizedQueue<Item>();
+
+        public RandomizedIterator(Item[] q) {
+            for (Item item : q) {
+                if (item == null) {
+                    break;
+                }
+
+                queue.enqueue(item);
+            }
+        }
+
+        @Override
+        public boolean hasNext() {
+            return !queue.isEmpty();
+        }
+
+        @Override
+        public Item next() {
+            if (queue.isEmpty()) {
+                throw new NoSuchElementException();
+            }
+            return queue.dequeue();
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    private void resize(int capacity) {
+        Item[] copy = (Item[]) new Object[capacity];
+        System.arraycopy(q, 0, copy, 0, Math.min(q.length, capacity));
+        q = copy;
+    }
+
+    private void validateEmpty() {
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        }
+    }
+
+    private void validateEnqueue(Item item) {
+        if (item == null) {
+            throw new NullPointerException();
+        }
     }
 
     /**
