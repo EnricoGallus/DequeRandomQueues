@@ -1,5 +1,3 @@
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.Iterator;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
@@ -16,7 +14,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @return
      */
     public boolean isEmpty() {
-        throw new NotImplementedException();
+        return false;
     }
 
     /**
@@ -24,7 +22,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @return
      */
     public int size() {
-        throw new NotImplementedException();
+        return 0;
     }
 
     /**
@@ -32,7 +30,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @param item
      */
     public void enqueue(Item item) {
-        throw new NotImplementedException();
     }
 
     /**
@@ -40,7 +37,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @return
      */
     public Item dequeue() {
-        throw new NotImplementedException();
+        return null;
     }
 
     /**
@@ -48,7 +45,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @return
      */
     public Item sample() {
-        throw new NotImplementedException();
+        return null;
     }
 
     /**
@@ -56,7 +53,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @return
      */
     public Iterator<Item> iterator() {
-        throw new NotImplementedException();
+        return null;
     }
 
     /**

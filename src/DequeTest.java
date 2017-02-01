@@ -97,4 +97,28 @@ public class DequeTest {
         assertEquals(0, deque.size());
         assertTrue(deque.isEmpty());
     }
+
+    @Test
+    public void FailingTestRemveLastSeveralTimes() {
+        Deque<Integer> deque = new Deque<>();
+        deque.isEmpty();
+        deque.isEmpty();
+        deque.addLast(2);
+        deque.addLast(3);
+        deque.addLast(4);
+        assertEquals(4, (int)deque.removeLast());
+        assertEquals(3, (int)deque.removeLast());
+    }
+
+    @Test
+    public void FailingTestRemveFirstSeveralTimes() {
+        Deque<Integer> deque = new Deque<>();
+        deque.isEmpty();
+        deque.isEmpty();
+        deque.addLast(2);
+        deque.addLast(3);
+        deque.addLast(4);
+        assertEquals(2, (int)deque.removeFirst());
+        assertEquals(3, (int)deque.removeFirst());
+    }
 }

@@ -7,9 +7,9 @@ public class Deque<Item> implements Iterable<Item> {
     private int counter = 0;
 
     private class Node {
-        Item item;
-        Node next;
-        Node previous;
+        private Item item;
+        private Node next;
+        private Node previous;
     }
 
     /**
@@ -67,7 +67,7 @@ public class Deque<Item> implements Iterable<Item> {
         Node oldLast = last;
         last = new Node();
         last.item = item;
-        last.previous = last;
+        last.previous = oldLast;
         if (oldLast != null) {
             oldLast.next = last;
         }
@@ -128,7 +128,7 @@ public class Deque<Item> implements Iterable<Item> {
     private class ListIterator implements Iterator<Item>
     {
         private Node current = first;
-        public boolean hasNext() { return current != null;}
+        public boolean hasNext() { return current != null; }
         public void remove() { throw new UnsupportedOperationException(); }
         public Item next() {
             if (current == null) {
